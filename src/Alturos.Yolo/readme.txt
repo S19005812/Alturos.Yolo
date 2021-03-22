@@ -20,13 +20,14 @@ var configurationDetector = new ConfigurationDetector();
 var config = configurationDetector.Detect();
 using (var yoloWrapper = new YoloWrapper(config))
 {
-	var items = yoloWrapper.Detect(@"image.jpg");
+	var items = yoloWrapper.Detect(@"image.jpg").ToList();
 	//items[0].Type -> "Person, Car, ..."
 	//items[0].Confidence -> 0.0 (low) -> 1.0 (high)
 	//items[0].X -> bounding box
 	//items[0].Y -> bounding box
 	//items[0].Width -> bounding box
 	//items[0].Height -> bounding box
+	//items[0].StandardDeviation -> standard deviation between two neighbouring points
 }
 
 
