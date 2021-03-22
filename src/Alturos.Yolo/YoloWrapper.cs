@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Diagnostics;
 
 namespace Alturos.Yolo
 {
@@ -256,6 +257,7 @@ namespace Alturos.Yolo
         /// <param name="size"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Thrown when the yolo_cpp dll is wrong compiled</exception>
+       
         public IEnumerable<YoloItem> Detect(IntPtr imagePtr, int size)
         {
             var container = new BboxContainer();
@@ -345,9 +347,5 @@ namespace Alturos.Yolo
             }
             return items.OrderBy(o => o.Y);     
         }
-
-
-
-
     }
 }
