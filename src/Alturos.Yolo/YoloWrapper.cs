@@ -309,10 +309,16 @@ namespace Alturos.Yolo
             return BuiltWithOpenCV();
         }
 
+        public static double CalculateStandardDeviationTwoPoints(int[] arr)
+        {
+            var meanPoints = arr.Average();
+            return Math.Sqrt((Math.Pow(Math.Abs(arr[0] - meanPoints), 2) + Math.Pow(Math.Abs(arr[1] - meanPoints), 2)) / (arr.Length - 1.0));
+        }
+
         private IEnumerable<YoloItem> Convert(BboxContainer container)
         {
-            return container.candidates.Where(o => o.h > 0 || o.w > 0).Select(o =>
-            
+            var items = container.candidates.Where(o => o.h > 0 || o.w > 0).Select(o =>
+
                 new YoloItem
                 {
                     X = (int)o.x,
@@ -322,7 +328,26 @@ namespace Alturos.Yolo
                     Confidence = o.prob,
                     Type = this._objectTypeResolver.Resolve((int)o.obj_id)
                 }
-            ); ;
+            ).OrderBy(o => o.Y).ToList(); ;
+
+
+            for (var i = 0; i < items.Count; i++)
+            {
+
+                if (i + 1 < items.Count)
+                {
+                    items[i].StandardDeviation = CalculateStandardDeviationTwoPoints(new int[] { items[i].Y, items[i + 1].Y });
+                }
+                else
+                {
+                    items[i].StandardDeviation = 0.0;
+                }
+            }
+            return items.OrderBy(o => o.Y);     
         }
+
+
+
+
     }
 }
