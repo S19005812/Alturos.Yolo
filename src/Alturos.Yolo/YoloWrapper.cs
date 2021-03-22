@@ -312,7 +312,7 @@ namespace Alturos.Yolo
         private IEnumerable<YoloItem> Convert(BboxContainer container)
         {
             return container.candidates.Where(o => o.h > 0 || o.w > 0).Select(o =>
-
+            
                 new YoloItem
                 {
                     X = (int)o.x,
@@ -322,7 +322,7 @@ namespace Alturos.Yolo
                     Confidence = o.prob,
                     Type = this._objectTypeResolver.Resolve((int)o.obj_id)
                 }
-            );
+            ); ;
         }
     }
 }

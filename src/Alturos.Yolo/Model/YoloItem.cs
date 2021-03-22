@@ -11,6 +11,8 @@ namespace Alturos.Yolo.Model
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public double StandardDeviation { get; set; } = 0.0;
+
         public Point Center()
         {
             return new Point(this.X + this.Width / 2, this.Y + this.Height / 2);
